@@ -1,0 +1,20 @@
+HADDONFIELD WEATHER — install on iPhone (same GitHub Pages method as your other apps)
+
+1. On github.com, create a new PUBLIC repository named: haddonfield-weather
+2. Tap "uploading an existing file" (or Add file > Upload files).
+   Unzip this package and upload EVERYTHING inside it, keeping the folders:
+     index.html, style.css, manifest.webmanifest, sw.js, js/ (5 files), icons/ (3 files)
+   Tap "Commit changes".
+3. Settings > Pages > Source: "Deploy from a branch" > Branch: main / (root) > Save.
+4. Wait 1–2 minutes. Your app lives at:
+     https://YOUR-USERNAME.github.io/haddonfield-weather/
+5. Open that link in SAFARI on your iPhone > Share button > "Add to Home Screen".
+6. Launch it from the Home Screen, tap "TAP TO ENTER", and allow location.
+
+Notes
+- Works offline after the first launch (the app is cached; your last forecast is saved).
+  Live weather needs a connection.
+- Portrait-locked: if the phone turns sideways, the app counter-rotates to stay upright.
+- Updating later: upload the new files over the old ones, then change "haddonfield-v1"
+  in sw.js to "haddonfield-v2" so your iPhone grabs the new version. Close & reopen the app twice.
+- Weather data: Open-Meteo (free, no key). Alerts: National Weather Service (US only).

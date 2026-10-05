@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Haddonfield">
+<meta name="theme-color" content="#0a0507">
+<title>Haddonfield Weather</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="icon" type="image/png" href="icons/icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="rot">
+
+  <!-- TITLE / BOOT -->
+  <div id="title">
+    <canvas id="titleFx" width="96" height="160"></canvas>
+    <div class="t-inner">
+      <div class="t-small">THE NIGHT HE CAME HOME</div>
+      <h1 class="t-big">HADDONFIELD<br><span>WEATHER</span></h1>
+      <div class="t-pumpkin" aria-hidden="true"></div>
+      <div class="t-sub">HADDONFIELD, ILLINOIS · OCT 31</div>
+      <button id="enter" class="blink">▶ TAP TO ENTER</button>
+      <div class="t-note">Sound on · Location needed for your forecast</div>
+    </div>
+  </div>
+
+  <main id="app" hidden>
+    <header class="top">
+      <div class="brand"><b>HADDONFIELD</b><i>WEATHER</i></div>
+      <div class="ctrl">
+        <button id="btnAuto" class="pill on" aria-label="Auto refresh"><span class="dot"></span><span id="autoTxt">AUTO 60</span></button>
+        <button id="btnRef" class="ico" aria-label="Refresh now">⟳</button>
+        <button id="btnSet" class="ico" aria-label="Settings">⚙</button>
+      </div>
+    </header>
+
+    <section id="hero">
+      <canvas id="scene" width="192" height="176"></canvas>
+      <div id="locTag"></div>
+      <div id="heroTemp"><b id="hTemp">--°</b><span id="hCond">Loading…</span></div>
+      <div id="offTag" hidden>OFFLINE · LAST FORECAST</div>
+      <div class="fx-scan"></div><div class="fx-vig"></div>
+      <canvas id="grain" width="96" height="88"></canvas>
+      <button id="btnSkip" class="mini" aria-label="Next scene">⏭</button>
+    </section>
+
+    <div id="caption"><div id="capName">HADDONFIELD</div><div id="capText">Tuning in to WHAD radio…</div></div>
+
+    <section class="card now">
+      <div class="placeRow"><span id="place">Finding you…</span><span id="updated"></span></div>
+      <div class="nowGrid">
+        <div class="bigT"><b id="nTemp">--°</b><canvas id="nIcon" width="16" height="16"></canvas></div>
+        <div class="nowTxt">
+          <div id="nCond" class="cond">--</div>
+          <div id="nSpooky" class="spooky"></div>
+          <div class="hl">FEELS <b id="nFeels">--</b> · H <b id="nHi">--</b> · L <b id="nLo">--</b></div>
+        </div>
+      </div>
+      <div id="alerts"></div>
+    </section>
+
+    <section class="card">
+      <h2>🕯 NEXT HOUR</h2>
+      <div id="nhSum" class="sum">--</div>
+      <div id="nhBars" class="bars"></div>
+    </section>
+
+    <section class="card">
+      <h2>🎃 NEXT 24 HOURS</h2>
+      <canvas id="graph" width="720" height="220"></canvas>
+      <div class="legend"><span class="lg t">━ TEMP</span><span class="lg r">▮ RAIN %</span></div>
+      <div id="hours" class="hscroll"></div>
+    </section>
+
+    <section class="card">
+      <h2>🔪 10-DAY FORECAST</h2>
+      <div id="days"></div>
+    </section>
+
+    <section class="card">
+      <h2>📼 THE DETAILS</h2>
+      <div id="details" class="grid"></div>
+    </section>
+
+    <section class="card">
+      <h2>👻 THE CAST <small>tap to summon (one at a time)</small></h2>
+      <div id="cast" class="castGrid"></div>
+    </section>
+
+    <footer>
+      Weather: Open-Meteo · Alerts: NWS (US) · Places: BigDataCloud<br>
+      Fan-made tribute. Not affiliated with the films.
+    </footer>
+  </main>
+
+  <!-- SETTINGS SHEET -->
+  <div id="sheet" class="sheet" hidden>
+    <div class="sheetIn">
+      <div class="sheetHead"><b>⚙ SETTINGS</b><button id="closeSet" class="ico">✕</button></div>
+      <div class="setRow"><span>Units</span><div class="seg" data-k="units"><button data-v="F">°F</button><button data-v="C">°C</button></div></div>
+      <div class="setRow"><span>Auto refresh (60s)</span><div class="seg" data-k="auto"><button data-v="1">ON</button><button data-v="0">OFF</button></div></div>
+      <div class="setRow"><span>Sound effects</span><div class="seg" data-k="sfx"><button data-v="1">ON</button><button data-v="0">OFF</button></div></div>
+      <div class="setRow"><span>Creepy music</span><div class="seg" data-k="music"><button data-v="1">ON</button><button data-v="0">OFF</button></div></div>
+      <div class="setRow"><span>Jump scares</span><div class="seg" data-k="scares"><button data-v="0">OFF</button><button data-v="1">MILD</button><button data-v="2">MAX</button></div></div>
+      <div class="setRow"><span>VHS / CRT effects</span><div class="seg" data-k="crt"><button data-v="1">ON</button><button data-v="0">OFF</button></div></div>
+      <div class="setRow col"><span>Location</span>
+        <div class="locRow"><button id="useGps" class="btn">📍 USE MY LOCATION</button></div>
+        <div class="locRow"><input id="cityIn" placeholder="Search a city…" autocomplete="off"><button id="citySearch" class="btn">GO</button></div>
+        <div id="cityRes"></div>
+      </div>
+      <div class="setRow col"><span>Weather Lab <small>(preview any weather scene)</small></span>
+        <div id="lab" class="labGrid"></div>
+      </div>
+      <div class="setRow col"><span>Test</span><div class="locRow"><button id="testScare" class="btn red">🔪 TEST JUMP SCARE</button></div></div>
+    </div>
+  </div>
+
+  <div id="scare" hidden><canvas id="scareCv" width="300" height="400"></canvas></div>
+  <div id="toast"></div>
+</div>
+
+<script src="js/audio.js"></script>
+<script src="js/sprites.js"></script>
+<script src="js/text.js"></script>
+<script src="js/scene.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
